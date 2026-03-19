@@ -1,0 +1,63 @@
+name: Template Smoke Test
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  giter8-template-smoke:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+
+      - name: Setup coursier
+        uses: coursier/setup-action@v1
+
+      - name: Install giter8 cli
+        run: cs install giter8 --install-dir "$HOME/.local/bin"
+
+      - name: Generate project from local template
+        run: |
+          mkdir -p /tmp/g8-smoke
+          cd /tmp/g8-smoke
+          "$HOME/.local/bin/g8" "file://$GITHUB_WORKSPACE" \
+            --project_name=demo-lib \
+            --scala_version=2.13.16 \
+            --package_name=orders \
+            --force
+
+      - name: Verify generated structure
+        run: |
+          test -d /tmp/g8-smoke/demo-lib/src/main/scala/io/hiis/lib/orders
+          test -d /tmp/g8-smoke/demo-lib/src/test/scala/io/hiis/lib/orders
+
+      - name: Verify placeholders are rendered
+        run: |
+          if grep -R -nE '\$project_name\$|\$scala_version\$|\$package_name\$' /tmp/g8-smoke/demo-lib; then
+            echo "Unresolved giter8 placeholders found"
+            exit 1
+          fi
+
+      - name: Build generated project
+        run: |
+          cd /tmp/g8-smoke/demo-lib
+          sbt --batch test

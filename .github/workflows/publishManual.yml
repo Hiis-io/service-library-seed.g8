@@ -1,0 +1,84 @@
+name: Publish Library
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Library version (without prefix, example: 0.0.1-RC1)'
+        type: string
+        required: true
+      repository:
+        description: 'Repository'
+        required: true
+        default: 'private'
+        type: choice
+        options:
+          - releases
+          - private
+          - snapshots
+      prerelease:
+        description: 'Is this a pre-release? Set to true if version contains suffix such as -alpha, -RC etc'
+        required: true
+        default: true
+        type: boolean
+
+env:
+  ARTIFACT_TOKEN: ${{secrets.ARTIFACT_TOKEN}}
+  DEV_ID: ${{secrets.DEV_ID}}
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  publish_library:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Required due to the way Git works, without it this action won't be able to find any or the correct tags
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'adopt'
+
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+      - name: Get Previous tag
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        with:
+          fallback: v1.0.0-RC1 # Optional fallback tag to use when no tag can be found
+          prefix: v
+      - name: Set env
+        id: setenv
+        run: |
+          previoustag=${{steps.previoustag.outputs.tag}}
+          echo "previous_version=$(echo ${previoustag:1})" >> $GITHUB_ENV
+          new_version=${{inputs.version}}
+          echo "new_tag=$(echo v${new_version})" >> $GITHUB_ENV
+          echo "release_name=$(echo ${new_version} '(' $(date +'%B %d %Y') ')')" >> $GITHUB_ENV
+          part=$(wget -O - https://raw.githubusercontent.com/fsaintjacques/semver-tool/3.3.0/src/semver | bash -s diff "${new_version}" "${previous_version}")
+          echo "release_type=$(echo ${part})" >> $GITHUB_ENV
+      - name: Release
+        id: release
+        uses: softprops/action-gh-release@v1
+        with:
+          prerelease: ${{inputs.prerelease}}
+          tag_name: ${{env.new_tag}}
+          name: ${{env.release_name}}
+          generate_release_notes: true
+      - name: Build Library
+        id: build
+        env:
+          VERSION: ${{inputs.version}}
+          PREVIOUS_VERSION: ${{env.previous_version}}
+          REPOSITORY: ${{inputs.repository}}
+        run: |
+          if [${{env.release_type}} != 'major']; then
+            sbt mimaReportBinaryIssues publish
+          else 
+            sbt publish
+          fi
