@@ -45,7 +45,7 @@ resolvers += "hiis-repository-releases" at "https://artifacts.hiis.io/releases"
 resolvers += "hiis-repository-private" at "https://artifacts.hiis.io/private"
 
 publishTo := Some(
-  "Reposilite" at s"https://artifacts.hiis.io/${sys.env.getOrElse("REPOSITORY", "private")}"
+  "Reposilite" at ("https://artifacts.hiis.io/" + sys.env.getOrElse("REPOSITORY", "private"))
 )
 credentials += Credentials(
   "Reposilite",
