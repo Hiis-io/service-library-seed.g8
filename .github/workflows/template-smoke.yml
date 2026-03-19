@@ -49,6 +49,9 @@ jobs:
         run: |
           test -d /tmp/g8-smoke/demo-lib/src/main/scala/io/hiis/lib/orders
           test -d /tmp/g8-smoke/demo-lib/src/test/scala/io/hiis/lib/orders
+          test -d /tmp/g8-smoke/demo-lib/project
+          test -f /tmp/g8-smoke/demo-lib/project/build.properties
+          test -f /tmp/g8-smoke/demo-lib/project/plugins.sbt
 
       - name: Verify placeholders are rendered
         run: |
