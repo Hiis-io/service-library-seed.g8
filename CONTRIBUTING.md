@@ -1,5 +1,5 @@
-# Contributing to Transcriptase
-We love your input! We want to make contributing to this project as easy and transparent as possible, whether it's:
+# Contributing to service-library-seed.g8
+We love your input. We want to make contributing to this project as easy and transparent as possible, whether it's:
 
 - Reporting a bug
 - Discussing the current state of the code
@@ -7,24 +7,30 @@ We love your input! We want to make contributing to this project as easy and tra
 - Proposing new features
 - Becoming a maintainer
 
-## We Develop with Github
-We use github to host code, to track issues and feature requests, as well as accept pull requests.
+## We Develop with GitHub
+We use GitHub to host code, track issues and feature requests, and accept pull requests.
 
 ## We Use GitHub, So All Code Changes Happen Through Pull Requests
-Pull requests are the best way to propose changes to the codebase. We actively welcome your pull requests:
+Pull requests are the best way to propose changes to the codebase. We actively welcome pull requests:
 
-1. Fork the repo and create your branch from `master`.
+1. Fork the repo and create your branch from `main`.
 2. If you've added code that should be tested, add tests.
 3. If you've changed APIs, update the documentation.
 4. Ensure the test suite passes.
 5. Make sure your code lints.
 6. Issue that pull request!
 
-## Any contributions you make will be under the MIT Software License
-In short, when you submit code changes, your submissions are understood to be under the same [Apache V2 License](https://choosealicense.com/licenses/apache-2.0/) that covers the project. Feel free to contact the maintainers if that's a concern.
+## License and Contribution Terms
+This project is distributed under a proprietary license owned by Hiis.
 
-## Report bugs using Github's issues
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/Hiis-io/Votee/issues/new/choose); it's that easy!
+By submitting code, documentation, or any other contribution, you agree that:
+
+1. Your contribution can be used, modified, and distributed by Hiis as part of this repository.
+2. Your contribution is governed by the same proprietary license as the project.
+3. Additional legal/compliance review may be required before merge.
+
+## Report Bugs Using GitHub Issues
+We use GitHub issues to track bugs and requests. Report a bug by opening a new issue in this repository.
 
 ## Write bug reports with detail, background, and sample code
 
@@ -43,8 +49,8 @@ People *love* thorough bug reports.
 ## Use a Consistent Coding Style
 
 * Use tabs rather than spaces
-* You should always run `sbt scalafix` for style unification, this will execute the `scalafmt` task too. 
-* Run `sbt scalafmtSbt` if you have made changes in any .sbt file
+* Run `sbt scalafix` for style unification.
+* Run `sbt scalafmtSbt` if you modify `.sbt` files.
 
 ## License
-By contributing, you agree that your contributions will be licensed under its Apache V2 License.
+By contributing, you agree that your contributions are governed by the Hiis Proprietary License.

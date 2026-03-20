@@ -1,5 +1,7 @@
 # Contributor Covenant Code of Conduct
 
+This Code of Conduct applies to the `$name$` project and its community channels.
+
 ## Our Pledge
 
 In the interest of fostering an open and welcoming environment, we as

@@ -10,6 +10,11 @@ Its main package namespace is:
 
 Use this library to share reusable domain models, utility services, and cross-service contracts across your Scala applications.
 
+## License
+`$name$` is proprietary software owned by Hiis.
+
+Use, copying, modification, and distribution are subject to the terms in the `LICENSE` file.
+
 ## Installation
 Add the HIIS resolver and dependency in your application's `build.sbt`:
 
