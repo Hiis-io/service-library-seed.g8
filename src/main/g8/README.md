@@ -36,13 +36,6 @@ The generated base package path is:
 
 `io.hiis.lib.<package_name>`
 
-## Maintainers
-Template sources are stored in `src/main/g8` (giter8 src layout).
-
-- Edit template files under `src/main/g8/**`.
-- Define prompts/defaults in `src/main/g8/default.properties`.
-- SBT project template files are under `src/main/g8/$sbt_project_dir$/` and render to `project/` in generated projects.
-
 ## Intro
 Some intro
 
