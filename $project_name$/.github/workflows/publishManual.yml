@@ -23,8 +23,8 @@ on:
         type: boolean
 
 env:
-  ARTIFACT_TOKEN: ${{secrets.ARTIFACT_TOKEN}}
-  DEV_ID: ${{secrets.DEV_ID}}
+  ARTIFACT_TOKEN: \${{secrets.ARTIFACT_TOKEN}}
+  DEV_ID: \${{secrets.DEV_ID}}
 
 permissions:
   contents: write
@@ -55,29 +55,29 @@ jobs:
       - name: Set env
         id: setenv
         run: |
-          previoustag=${{steps.previoustag.outputs.tag}}
-          echo "previous_version=$(echo ${previoustag:1})" >> $GITHUB_ENV
-          new_version=${{inputs.version}}
-          echo "new_tag=$(echo v${new_version})" >> $GITHUB_ENV
-          echo "release_name=$(echo ${new_version} '(' $(date +'%B %d %Y') ')')" >> $GITHUB_ENV
-          part=$(wget -O - https://raw.githubusercontent.com/fsaintjacques/semver-tool/3.3.0/src/semver | bash -s diff "${new_version}" "${previous_version}")
-          echo "release_type=$(echo ${part})" >> $GITHUB_ENV
+          previoustag=\${{steps.previoustag.outputs.tag}}
+          echo "previous_version=$(echo \${previoustag:1})" >> \$GITHUB_ENV
+          new_version=\${{inputs.version}}
+          echo "new_tag=$(echo v\${new_version})" >> \$GITHUB_ENV
+          echo "release_name=$(echo \${new_version} '(' $(date +'%B %d %Y') ')')" >> \$GITHUB_ENV
+          part=$(wget -O - https://raw.githubusercontent.com/fsaintjacques/semver-tool/3.3.0/src/semver | bash -s diff "\${new_version}" "\${previous_version}")
+          echo "release_type=$(echo \${part})" >> $GITHUB_ENV
       - name: Release
         id: release
         uses: softprops/action-gh-release@v1
         with:
-          prerelease: ${{inputs.prerelease}}
-          tag_name: ${{env.new_tag}}
-          name: ${{env.release_name}}
+          prerelease: \${{inputs.prerelease}}
+          tag_name: \${{env.new_tag}}
+          name: \${{env.release_name}}
           generate_release_notes: true
       - name: Build Library
         id: build
         env:
-          VERSION: ${{inputs.version}}
-          PREVIOUS_VERSION: ${{env.previous_version}}
-          REPOSITORY: ${{inputs.repository}}
+          VERSION: \${{inputs.version}}
+          PREVIOUS_VERSION: \${{env.previous_version}}
+          REPOSITORY: \${{inputs.repository}}
         run: |
-          if [${{env.release_type}} != 'major']; then
+          if [\${{env.release_type}} != 'major']; then
             sbt mimaReportBinaryIssues publish
           else 
             sbt publish

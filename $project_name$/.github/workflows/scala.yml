@@ -10,8 +10,8 @@ on:
       - main
       - develop
 env:
-  ARTIFACT_TOKEN: ${{secrets.ARTIFACT_TOKEN}}
-  DEV_ID: ${{secrets.DEV_ID}}
+  ARTIFACT_TOKEN: \${{secrets.ARTIFACT_TOKEN}}
+  DEV_ID: \${{secrets.DEV_ID}}
 
 jobs:
   test:
