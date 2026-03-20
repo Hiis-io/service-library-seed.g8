@@ -1,13 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-#project specific files
-/src/main/scala/votee/Main.scala
-
 # compiled output
 /dist
 /tmp
 /out-tsc
-/project/*/
 # Only exists if Bazel was run
 /bazel-out
 tmp.html
