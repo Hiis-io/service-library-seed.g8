@@ -2,13 +2,8 @@ name: Template Smoke Test
 
 on:
   push:
-    branches:
-      - main
-      - develop
   pull_request:
-    branches:
-      - main
-      - develop
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -16,7 +11,6 @@ permissions:
 jobs:
   giter8-template-smoke:
     runs-on: ubuntu-latest
-    environment: production
     steps:
       - uses: actions/checkout@v4
 
@@ -41,7 +35,6 @@ jobs:
           cd /tmp/g8-smoke
           "$HOME/.local/bin/g8" "file://$GITHUB_WORKSPACE" \
             --name=demo-lib \
-            --project_name=demo-lib \
             --scala_version=2.13.16 \
             --package_name=orders \
             --force
@@ -56,7 +49,7 @@ jobs:
 
       - name: Verify placeholders are rendered
         run: |
-          if grep -R -nE '\$project_name\$|\$scala_version\$|\$package_name\$' /tmp/g8-smoke/demo-lib; then
+          if grep -R -nE '\$name\$|\$scala_version\$|\$package_name\$' /tmp/g8-smoke/demo-lib; then
             echo "Unresolved giter8 placeholders found"
             exit 1
           fi

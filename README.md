@@ -26,6 +26,12 @@ Using HTTPS:
 sbt new https://github.com/Hiis-io/service-library-seed.g8.git
 ```
 
+You can also pass values inline:
+
+```bash
+sbt new hiis-io/service-library-seed.g8 --name=my-lib --scala_version=2.13.16 --package_name=orders
+```
+
 You will be prompted for:
 
 1. `name`
@@ -42,43 +48,7 @@ Template sources are stored in `src/main/g8` (giter8 src layout).
 - Edit template files under `src/main/g8/**`.
 - Define prompts/defaults in `src/main/g8/default.properties`.
 - SBT project template files are under `src/main/g8/$sbt_project_dir$/` and render to `project/` in generated projects.
-
-## Intro
-Some intro
-
-## Usage
-Follow the steps bellow to add the library to your scala application.
-
-
-1. Add `sbt-github-packages` plugin to enable sbt to consume the package
-      
-      Add this line to your `./project/plugins.sbt`
-
-      `addSbtPlugin("com.codecommit" % "sbt-github-packages" % "0.5.3")`
-  
-    
-2. Add library resolver and dependencies to `./build.sbt`
-
-      ```
-         githubTokenSource := TokenSource.Environment("PACKAGE_TOKEN")
-
-         resolvers += Resolver.githubPackages("hiis-io")
-
-         libraryDependencies += "io.hiis" %% "<library name>" % "<version>"
-      ```
-
-3. Create a GitHub token from GitHub with permissions `(repo and package)`
-      Create and copy a GitHub token with permissions `repo and package` then create an Environment variable called `GITHUB_TOKEN` on your computer which has as value to token generated from GitHub.
-      
-      - On Windows Command prompt(cmd) run `setx PACKAGE_TOKEN <token_from_github>`
-
-      - On Mac or Linux go to `~/.profile` and add the line `export GITHUB_TOKEN=<token_from_github>`
-   
-      - Restart your computer else your IDE might not detect the new env variables
-
-     
-## Development
-The development of this library should be aligned with its parent service <parent service Github repository>
+- `sbt_project_dir` is an internal template variable; users should not override it.
 
 
 
