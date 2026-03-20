@@ -1,6 +1,6 @@
 ![Scala Version](https://img.shields.io/badge/Scala-2.13.8-red)
 ![SBT Version](https://img.shields.io/badge/SBT-1.6.2-blueviolet)
-![Scala CI](https://github.com/hiis-io/gallery-service-library/actions/workflows/scala.yml/badge.svg)
+![Scala CI](https://github.com/hiis-io/service-library-seed.g8/actions/workflows/template-smoke.yml/badge.svg)
 ![Release](https://img.shields.io/badge/Release-v0.0.1-blue)
 
 ## Giter8 Template
